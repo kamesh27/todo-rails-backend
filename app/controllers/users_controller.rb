@@ -38,6 +38,13 @@ class UsersController < ApplicationController
     @user.destroy
   end
 
+  def tasks
+    @user = User.all
+    @user_details = @user.find_by(name: params[:user_identity])
+    @task_details = @user.find_by(name: params[:user_identity]).tasks.find(params[:task_identity])
+    render json: {task_data: {user_data: @user_details, task_data: @task_details}}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
