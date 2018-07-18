@@ -41,7 +41,11 @@ class UsersController < ApplicationController
   def tasks
     @user = User.all
     @user_details = @user.find_by(name: params[:user_identity])
-    @task_details = @user.find_by(name: params[:user_identity]).tasks.find(params[:task_identity])
+    if(params[:task_identity] == 'tasks')
+      @task_details = @user.find_by(name: params[:user_identity]).tasks
+    else
+      @task_details = @user.find_by(name: params[:user_identity]).tasks.find(params[:task_identity])
+    end
     render json: {task_data: {user_data: @user_details, task_data: @task_details}}
   end
 
